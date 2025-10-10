@@ -29,6 +29,7 @@ export default function HomeScreen() {
 
      <FlatList 
         data={notes}
+        keyExtractor={item=>item.id.toString()}
         renderItem={({item})=>(
           <View style={{
             borderBottomWidth:1,
@@ -36,11 +37,11 @@ export default function HomeScreen() {
             marginBottom:5
           }}>
             <Text style={{fontWeight:'bold',fontSize:16}}>
-              {item.title} - {item.id}
+              {item.title} 
             </Text>
 
             <View style={{flexDirection:'row',marginTop:5}}>
-                <Button title="Editar"/>
+                <Button title="Editar" onPress={()=>router.push(`/edit/${item.id}`)}/>
                 <View style={{width:10}}/>
                 <Button title="Deletar" 
                    onPress={()=>handleDelete(item.id)}
