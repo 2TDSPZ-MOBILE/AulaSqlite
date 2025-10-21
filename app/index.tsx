@@ -1,4 +1,5 @@
 import { useFocusEffect, useRouter } from "expo-router";
+import { MotiText, MotiView } from "moti";
 import React, { useState } from "react";
 import { Button, FlatList, Text, View } from "react-native";
 import { deleteNote, getNotes } from "../src/db/notes";
@@ -30,16 +31,27 @@ export default function HomeScreen() {
      <FlatList 
         data={notes}
         keyExtractor={item=>item.id.toString()}
-        renderItem={({item})=>(
-          <View style={{
+        renderItem={({item,index})=>(
+          <MotiView 
+            from={{opacity:0,translateY:20}}
+            animate={{opacity:1,translateY:0}}
+            transition={{delay:index*100}}
+
+            style={{
             borderBottomWidth:1,
             padding:10,
             marginBottom:5
           }}>
-            <Text style={{fontWeight:'bold',fontSize:16}}>
+            <MotiText 
+              from={{scale:0.95}}
+              animate={{scale:1}}
+              transition={{type:'timing',duration:1000}}
+              style={{fontWeight:'bold',fontSize:16}}>
               {item.title} 
+            </MotiText>
+            <Text>
+              {item.content}
             </Text>
-
             <View style={{flexDirection:'row',marginTop:5}}>
                 <Button title="Editar" onPress={()=>router.push(`/edit/${item.id}`)}/>
                 <View style={{width:10}}/>
@@ -47,7 +59,7 @@ export default function HomeScreen() {
                    onPress={()=>handleDelete(item.id)}
                 />           
             </View>
-          </View>
+          </MotiView>
         )}
      />
     </View>

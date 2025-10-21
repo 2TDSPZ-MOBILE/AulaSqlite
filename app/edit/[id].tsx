@@ -1,9 +1,9 @@
-import React,{useState,useEffect} from 'react'
-import{View,TextInput,Button,Alert} from 'react-native'
-import{useRouter,useLocalSearchParams} from 'expo-router'
-
+import { useLocalSearchParams, useRouter } from 'expo-router'
+import { MotiView } from 'moti'
+import React, { useEffect, useState } from 'react'
+import { Alert, Button, TextInput } from 'react-native'
 //Importa funções do banco SQLite
-import{getNotes,updateNote} from "../../src/db/notes"
+import { getNotes, updateNote } from "../../src/db/notes"
 
 //Define a interface Note para tipar as notas
 interface Note{
@@ -47,7 +47,15 @@ function handleUpdate(){
     router.back()
 }
     return(
-        <View style={{flex:1,padding:20}}> 
+        <MotiView 
+        from={{opacity:0,translateY:40}}
+        animate={{opacity:1,translateY:0}}
+        transition={{
+            type:'timing',
+            duration:500
+        }}
+        style={{flex:1,padding:20}}
+        > 
             <TextInput 
                 placeholder='Título' 
                 value={title}
@@ -65,10 +73,10 @@ function handleUpdate(){
                 multiline
                 style={{
                 borderWidth:1,padding:10,height:120,
-                borderRadius:6
+                borderRadius:6,marginBottom:10
                 }} 
-                    />
-                    <Button title='Atualizar' onPress={handleUpdate}/>
-                </View>
+            />
+            <Button title='Atualizar' onPress={handleUpdate}/>
+        </MotiView>
     )
 }
