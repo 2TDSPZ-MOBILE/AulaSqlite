@@ -60,14 +60,13 @@ export default function AddNoteScreen() {
                 </MotiView>
 
                 <MotiView
-                  from={{scale:0.8}}  
-                  animate={{scale:1}}
+                  from={{scale:0.8,opacity:0.8}}  
+                  animate={{scale:1,opacity:1}}
                   transition={{
                     loop:true,
                     type:"timing",
                     duration:1000
-                  }}
-                  style={{marginTop:10}}
+                  }} 
                 >
                     <Button title='Salvar' onPress={handleSave} />
                 </MotiView>
