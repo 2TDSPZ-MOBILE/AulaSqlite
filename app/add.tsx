@@ -3,6 +3,7 @@ import { MotiView } from "moti"
 import React, { useState } from 'react'
 import { Alert, Button, TextInput, View } from "react-native"
 import { addNote } from '../src/db/notes'
+import { generateTitleFromContentHF } from "@/src/ia/generateTitleHF"
 
 export default function AddNoteScreen() {
     const [title, setTitle] = useState("")
@@ -18,6 +19,22 @@ export default function AddNoteScreen() {
         addNote(title, content)//adiciona no banco
         router.back()//Volta para a tela de lista
     }
+
+    //Função para gerar título com IA
+    async function handleGenerateTitle() {
+            //Valição simples do campo conteúdo
+            if(!content.trim()){
+                Alert.alert("Atenção","Digite algum conteúdo antes de gerar o título")
+                return
+            }
+
+            const generated = await generateTitleFromContentHF(content)
+            if(generated){
+                setTitle(generated)
+            }
+
+    }
+
     return (
         <View style={{ flex: 1, padding: 20 }}>
             <MotiView
@@ -56,6 +73,23 @@ export default function AddNoteScreen() {
                             borderWidth: 1, padding: 10, height: 120,
                             borderRadius: 6
                         }}
+                    />
+                </MotiView>
+
+                <MotiView
+                style={{marginBottom:10,marginTop:10}}
+                  from={{scale:0.8,opacity:0.8}}  
+                  animate={{scale:1,opacity:1}}
+                  transition={{
+                    loop:true,
+                    type:"timing",
+                    duration:1000
+                  }} 
+                >
+                    <Button 
+                        title='Gerar Título com IA' 
+                        onPress={handleGenerateTitle}
+                        color="orange" 
                     />
                 </MotiView>
 
